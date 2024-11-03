@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sinaasappel"
-version = "0.1.0"
+version = "0.1.3"
 description = "Useful utils"
 authors = ["nicolasspring <springn.ch@gmail.com>"]
 license = "The Unlicense"
