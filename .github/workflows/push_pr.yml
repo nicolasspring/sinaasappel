@@ -15,7 +15,8 @@ jobs:
       - uses: psf/black@stable
       - uses: isort/isort-action@master
 
-  pytest:
+  test:
+    name: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
