@@ -22,11 +22,11 @@ if [[ $latest_version_pypi == $package_version ]]; then
     if [[ "$testpypi_suffix" == *"post"* && "$testpypi_version" == "$package_version" ]]; then
         >&2 echo "existing post-release, incrementing..."
         new_suffix_number=$((testpypi_suffix_number+1))
-        new_testpypi_release="${package_version}post${new_suffix_number}"
+        new_testpypi_release="${package_version}.post${new_suffix_number}"
     # in all other cases, we are building the post0 release
     else
-        >&2 echo "no existing post-release, tagging with post0..."
-        new_testpypi_release="${package_version}post0"
+        >&2 echo "no existing post-release, tagging with .post0..."
+        new_testpypi_release="${package_version}.post0"
     fi
 
 # if the local version is different (presumably higher), we are building an alpha version
