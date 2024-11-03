@@ -1,0 +1,18 @@
+name: push_pr
+on:
+  push:
+  pull_request:
+permissions:
+  pull-requests: write
+
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: psf/black@stable
+      - uses: isort/isort-action@master
+        with:
+            requirementsFiles: "requirements.txt requirements.dev.txt"
