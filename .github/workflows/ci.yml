@@ -27,6 +27,11 @@ jobs:
         poetry config virtualenvs.in-project true --local
     - name: Install project dependencies
       run: poetry install
+    - name: Get stg release version (only for testpypi)
+      if: startsWith(github.ref, 'refs/tags/')  # only overwrite package version for testpypi/stg
+      run: |
+        release=$(bash .github/stg_release.sh)
+        poetry version $release
     - name: Build a binary wheel and a source tarball
       run: poetry build
     - name: Store the distribution packages
