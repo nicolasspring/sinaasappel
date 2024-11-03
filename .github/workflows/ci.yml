@@ -28,7 +28,7 @@ jobs:
     - name: Install project dependencies
       run: poetry install
     - name: Get stg release version (only for testpypi)
-      if: startsWith(github.ref, 'refs/tags/')  # only overwrite package version for testpypi/stg
+      if: github.ref == 'refs/heads/stg'  # only overwrite package version for testpypi/stg
       run: |
         release=$(bash .github/stg_release.sh)
         poetry version $release
