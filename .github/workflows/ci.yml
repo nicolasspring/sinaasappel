@@ -100,6 +100,7 @@ jobs:
 
   publish-to-testpypi:
     name: Publish Python 🐍 distribution 📦 to TestPyPI
+    if: success() && github.ref == 'refs/heads/stg'  # only publish to testPyPI on pushes on stg
     needs:
     - build
     runs-on: ubuntu-latest
