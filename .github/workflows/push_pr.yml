@@ -37,6 +37,10 @@ jobs:
         run: poetry install
       - name: Run pytest
         run: poetry run pytest -v --cov=sinaasappel
+      - name: Get stg release version (only for testpypi)
+        run: |
+          release=$(bash .github/stg_release.sh)
+          poetry version $release
       - name: Coverage comment
         id: coverage_comment
         uses: py-cov-action/python-coverage-comment-action@v3
