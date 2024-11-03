@@ -27,5 +27,5 @@ profile = "black"
 addopts = "--cov=sinaasappel --cov-report html"
 
 [tool.coverage.run]
-omit = ["sinaasappel/tests/*"]
+omit = ["tests/*"]
 relative_files = true
