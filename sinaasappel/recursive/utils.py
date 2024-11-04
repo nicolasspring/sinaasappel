@@ -10,7 +10,6 @@ def recursive_sum(elem: t.Union[int, list[t.Union[int, list]]]):
 
 
 def numpy_sum(elem: list[int]):
-    """ """
     return np.sum(elem)
 
 
