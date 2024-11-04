@@ -1,6 +1,6 @@
-latest_version_pypi=$(pip index versions sinaasappel |& grep -P "LATEST:" |& grep -Po "\S*?$")
-latest_version_testpypi=$(pip index versions sinaasappel --index-url https://test.pypi.org/simple/ |& grep -P "LATEST:" |& grep -Po "\S*?$")
-package_version=$(python3 -c "import importlib.metadata; meta=importlib.metadata.metadata('sinaasappel'); print(meta['Version'])")
+latest_version_pypi=$(pip index versions sinaasappel |& grep "sinaasappel" |& grep -Po "\d+\.\d+\.\d+[^)]*")
+latest_version_testpypi=$(pip index versions sinaasappel --index-url https://test.pypi.org/simple/ |& grep "sinaasappel" |& grep -Po "\d+\.\d+\.\d+[^)]*")
+package_version=$(python3 -c "import tomli; print(tomli.load(open('pyproject.toml', mode='rb'))['tool']['poetry']['version'])")
 
 version_pattern="\d+\.\d+\.\d+"
 testpypi_version=$(echo $latest_version_testpypi | grep -Po $version_pattern)
