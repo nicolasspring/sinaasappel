@@ -1,4 +1,4 @@
-name: push_pr
+name: test
 on:
   push:
   pull_request:
@@ -7,14 +7,6 @@ permissions:
 
 
 jobs:
-  lint:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: psf/black@stable
-      - uses: isort/isort-action@master
-
   test:
     name: test
     runs-on: ubuntu-latest
