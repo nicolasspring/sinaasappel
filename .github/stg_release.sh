@@ -1,6 +1,6 @@
-latest_version_pypi=$(pip index versions sinaasappel |& grep -P "LATEST:" |& grep -Po "\S*?$")
-latest_version_testpypi=$(pip index versions sinaasappel --index-url https://test.pypi.org/simple/ |& grep -P "LATEST:" |& grep -Po "\S*?$")
-package_version=$(python3 -c "import importlib.metadata; meta=importlib.metadata.metadata('sinaasappel'); print(meta['Version'])")
+latest_version_pypi=$(pip index versions sinaasappel |& grep "sinaasappel" |& grep -Po "\d+\.\d+\.\d+[^)]*")
+latest_version_testpypi=$(pip index versions sinaasappel --index-url https://test.pypi.org/simple/ |& grep "sinaasappel" |& grep -Po "\d+\.\d+\.\d+[^)]*")
+package_version=$(python3 -c "import tomli; print(tomli.load(open('pyproject.toml', mode='rb'))['tool']['poetry']['version'])")
 
 version_pattern="\d+\.\d+\.\d+"
 testpypi_version=$(echo $latest_version_testpypi | grep -Po $version_pattern)
@@ -22,11 +22,11 @@ if [[ $latest_version_pypi == $package_version ]]; then
     if [[ "$testpypi_suffix" == *"post"* && "$testpypi_version" == "$package_version" ]]; then
         >&2 echo "existing post-release, incrementing..."
         new_suffix_number=$((testpypi_suffix_number+1))
-        new_testpypi_release="${package_version}post${new_suffix_number}"
+        new_testpypi_release="${package_version}.post${new_suffix_number}"
     # in all other cases, we are building the post0 release
     else
-        >&2 echo "no existing post-release, tagging with post0..."
-        new_testpypi_release="${package_version}post0"
+        >&2 echo "no existing post-release, tagging with .post0..."
+        new_testpypi_release="${package_version}.post0"
     fi
 
 # if the local version is different (presumably higher), we are building an alpha version
