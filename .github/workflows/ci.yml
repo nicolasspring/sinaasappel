@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python
+    - name: Install Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.x"
@@ -27,6 +27,11 @@ jobs:
         poetry config virtualenvs.in-project true --local
     - name: Install project dependencies
       run: poetry install
+    - name: Overwrite stg release version (only for testpypi)
+      if: github.ref == 'refs/heads/stg'  # only overwrite package version for testpypi/stg
+      run: |
+        release=$(bash .github/stg_release.sh)
+        poetry version $release
     - name: Build a binary wheel and a source tarball
       run: poetry build
     - name: Store the distribution packages
