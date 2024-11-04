@@ -5,6 +5,9 @@ Useful utils
 <a href="https://github.com/nicolasspring/sinaasappel/actions?query=event%3Apush+branch%3Amain+workflow%3ACI" target="_blank">
     <img src="https://img.shields.io/github/actions/workflow/status/nicolasspring/sinaasappel/ci.yml?branch=main&logo=github&label=CI" alt="CI status">
 </a>
+<a href="https://github.com/nicolasspring/sinaasappel/actions/workflows/test.yml?query=branch%3Amain+" target="_blank">
+    <img src="https://img.shields.io/github/actions/workflow/status/nicolasspring/sinaasappel/test.yml?branch=main&logo=github&label=Tests" alt="Tests">
+</a>
 <a href="https://pypi.org/project/sinaasappel" target="_blank">
     <img src="https://img.shields.io/pypi/v/sinaasappel?&label=pypi%20package" alt="Package version">
 </a>
