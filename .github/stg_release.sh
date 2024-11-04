@@ -1,6 +1,7 @@
 # get latest version of pypi and testpypi from pip index
 latest_version_pypi=$(pip index versions sinaasappel |& grep "sinaasappel" |& grep -Po "\d+\.\d+\.\d+[^)]*")
 latest_version_testpypi=$(pip index versions sinaasappel --pre --index-url https://test.pypi.org/simple/ |& grep "sinaasappel" |& grep -Po "\d+\.\d+\.\d+[^)]*")
+# parse the pyproject.toml file from the command line
 package_version=$( cat pyproject.toml | grep "\[tool.poetry\]" -A 2 | tail -n 1 | grep -Po "\d+\.\d+\.\d+[^\"]*")
 
 version_pattern="\d+\.\d+\.\d+"
