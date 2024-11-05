@@ -8,6 +8,9 @@ Useful utils
 <a href="https://github.com/nicolasspring/sinaasappel/actions/workflows/test.yml?query=branch%3Amain+" target="_blank">
     <img src="https://img.shields.io/github/actions/workflow/status/nicolasspring/sinaasappel/test.yml?branch=main&logo=github&label=Tests" alt="Tests">
 </a>
+<a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/nicolasspring/sinaasappel" target="_blank">
+    <img src="https://coverage-badge.samuelcolvin.workers.dev/nicolasspring/sinaasappel.svg" alt="Coverage">
+</a>
 <a href="https://pypi.org/project/sinaasappel" target="_blank">
     <img src="https://img.shields.io/pypi/v/sinaasappel?&label=pypi%20package" alt="Package version">
 </a>
