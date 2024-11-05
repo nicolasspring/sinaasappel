@@ -1,4 +1,4 @@
-name: cov_comment
+name: coverage_comment
 
 on:
   workflow_run:

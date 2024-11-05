@@ -1,6 +1,11 @@
 name: test
+
 on:
   push:
+    branches:
+      - '**'
+    tags:
+      - '**'
   pull_request:
 permissions:
   pull-requests: write
@@ -43,3 +48,14 @@ jobs:
         with:
           name: python-coverage-comment-action
           path: python-coverage-comment-action.txt
+      - name: Store coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-data
+          path: .coverage
+          include-hidden-files: true
+      - name: Store coverage html
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: htmlcov
