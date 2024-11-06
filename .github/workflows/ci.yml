@@ -1,14 +1,12 @@
 name: CI
 
 on:
-  workflow_run:
-    workflows: test
+  push:
     branches:
       - stg
       - main
     tags:
       - '**'
-    types: completed
 
 jobs:
   build:
