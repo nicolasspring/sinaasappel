@@ -34,6 +34,7 @@ jobs:
         run: poetry install
       - name: Run pytest
         run: poetry run pytest -v --cov=sinaasappel
+      - run: pip install coverage[toml]
       - run: coverage html --show-contexts --title "sinaasappel coverage for ${{ github.sha }}"
       - name: Coverage comment
         id: coverage_comment
