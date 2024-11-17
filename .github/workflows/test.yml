@@ -14,11 +14,21 @@ permissions:
 jobs:
   test:
     name: test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+        exclude:
+          # macos-latest on M1 does not support Python 3.9
+          - os: macos-latest
+            python-version: '3.9'
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Install poetry
         uses: abatilo/actions-poetry@v3
       - name: Setup local virtual environment
@@ -34,7 +44,32 @@ jobs:
         run: poetry install
       - name: Run pytest
         run: poetry run pytest -v --cov=sinaasappel
+      - run: mkdir coverage
+      - run: mv .coverage coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+      - name: Store coverage files
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python-version }}
+          path: coverage
+          include-hidden-files: true
+
+  coverage-combine:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+      - name: Get coverage files
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          pattern: coverage-*
+          path: coverage
       - run: pip install coverage[toml]
+      - run: ls -la coverage
+      - run: coverage combine coverage
+      - run: coverage report
       - run: coverage html --show-contexts --title "sinaasappel coverage for ${{ github.sha }}"
       - name: Coverage comment
         id: coverage_comment
