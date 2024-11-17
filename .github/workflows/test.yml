@@ -46,7 +46,32 @@ jobs:
         run: poetry install
       - name: Run pytest
         run: poetry run pytest -v --cov=sinaasappel
+      - run: mkdir coverage
+      - run: mv .coverage coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+      - name: Store coverage files
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python-version }}
+          path: coverage
+          include-hidden-files: true
+
+  coverage-combine:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+      - name: Get coverage files
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          pattern: coverage-*
+          path: coverage
       - run: pip install coverage[toml]
+      - run: ls -la coverage
+      - run: coverage combine coverage
+      - run: coverage report
       - run: coverage html --show-contexts --title "sinaasappel coverage for ${{ github.sha }}"
       - name: Coverage comment
         id: coverage_comment
