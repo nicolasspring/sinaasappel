@@ -29,3 +29,9 @@ addopts = "--cov=sinaasappel --cov-report html"
 [tool.coverage.run]
 omit = ["tests/*"]
 relative_files = true
+
+[tool.coverage.paths]
+source = [
+    '*/sinaasappel/sinaasappel',
+    '*\sinaasappel\sinaasappel',
+]
