@@ -90,19 +90,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Python
         uses: actions/setup-python@v5
-      - name: Get coverage files
+      - name: Get coverage file
         uses: actions/download-artifact@v4
         with:
           name: coverage-data
           path: .coverage
+      - run: mv /home/runner/work/sinaasappel/sinaasappel/.coverage /github/workspace/.coverage
       - name: Coverage comment
         id: coverage_comment
         uses: py-cov-action/python-coverage-comment-action@v3
-        if: github.event_name == 'pull_request'
         with:
           GITHUB_TOKEN: ${{ github.token }}
           MINIMUM_GREEN: 100
-          MINIMUM_ORANGE: 90
+          MINIMUM_ORANGE: 95
       - name: Store Pull Request comment to be posted
         uses: actions/upload-artifact@v4
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
