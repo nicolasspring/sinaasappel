@@ -21,7 +21,7 @@ Useful utils
 
 ## Recursive sum
 
-Use the following commands to calculate the sum of a nested list of ints:
+Use the following commands to calculate the unweighted sum of a nested list of ints:
 
 ```python
 from sinaasappel import recursive_sum
