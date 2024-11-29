@@ -55,7 +55,7 @@ jobs:
 
   coverage-combine:
     needs: [test]
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
@@ -67,24 +67,9 @@ jobs:
           pattern: coverage-*
           path: coverage
       - run: pip install coverage[toml]
-      - run: ls -la coverage
       - run: coverage combine coverage
       - run: coverage report
       - run: coverage html --show-contexts --title "sinaasappel coverage for ${{ github.sha }}"
-      - name: Coverage comment
-        id: coverage_comment
-        uses: py-cov-action/python-coverage-comment-action@v3
-        if: github.event_name == 'pull_request'
-        with:
-          GITHUB_TOKEN: ${{ github.token }}
-          MINIMUM_GREEN: 100
-          MINIMUM_ORANGE: 90
-      - name: Store Pull Request comment to be posted
-        uses: actions/upload-artifact@v4
-        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
-        with:
-          name: python-coverage-comment-action
-          path: python-coverage-comment-action.txt
       - name: Store coverage data
         uses: actions/upload-artifact@v4
         with:
@@ -96,3 +81,29 @@ jobs:
         with:
           name: coverage-html
           path: htmlcov
+
+  pr-comment:
+    needs: [coverage-combine]
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+      - name: Get coverage file
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-data
+      - name: Coverage comment
+        id: coverage_comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          MINIMUM_GREEN: 100
+          MINIMUM_ORANGE: 95
+      - name: Store Pull Request comment to be posted
+        uses: actions/upload-artifact@v4
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          name: python-coverage-comment-action
+          path: python-coverage-comment-action.txt
