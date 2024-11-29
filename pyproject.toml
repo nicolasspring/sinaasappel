@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sinaasappel"
-version = "0.1.17"
+version = "0.1.18"
 description = "Useful utils"
 authors = ["nicolasspring <springn.ch@gmail.com>"]
 license = "The Unlicense"
@@ -29,3 +29,9 @@ addopts = "--cov=sinaasappel --cov-report html"
 [tool.coverage.run]
 omit = ["tests/*"]
 relative_files = true
+
+[tool.coverage.paths]
+source = [
+    '*/sinaasappel/sinaasappel',
+    '*\sinaasappel\sinaasappel',
+]
